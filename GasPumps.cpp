@@ -47,17 +47,17 @@ int main(int argc, char* argv[])
         std::sort(intervals.begin(), intervals.end(), custom_comparator);
 
         // check if first and last interval are in range
-        if (intervals[0].first != 0 || intervals[intervals.size() - 1].second != L) { 
+        /*if (intervals[0].first != 0 || intervals[intervals.size() - 1].second != L) { 
             std::cout << "-1";
             return -1;
-        }
+        }*/
         // check if all points are in range
-        for (int i = 0; i < intervals.size() - 1; i++) {
+        /*for (int i = 0; i < intervals.size() - 1; i++) {
             if (intervals[i].second < intervals[i + 1].first) {
                 std::cout << "-1";
                 return -1;
             }
-        }
+        }*/
 
         //for (std::pair<int, int> i : intervals) std::cout << "[" << i.first << ", " << i.second << "]\n";
 
@@ -70,15 +70,17 @@ int main(int argc, char* argv[])
                 if (intervals[j].first <= acceptedIntervals[acceptedIntervals.size() - 1].second) {
                     if (bestPair.second <= intervals[j].second) bestPair = intervals[j];
                 }
+                else break;
             }
             if (acceptedIntervalsSet.count(bestPair) == 0) {
                 acceptedIntervals.push_back(bestPair);
                 acceptedIntervalsSet.insert(bestPair);
+                if (bestPair.second == L) goto print;
             }
         }
 
         //for (std::pair<int, int> i : acceptedIntervals) std::cout << "[" << i.first << ", " << i.second << "]\n";
-
+        print:
         std::cout << intervals.size() - acceptedIntervals.size() << "\n";
     }
 }
